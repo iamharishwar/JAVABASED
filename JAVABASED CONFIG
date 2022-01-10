@@ -1,0 +1,73 @@
+CREATE 3 CLASS IN JAVA MAIN DIRECTORY 
+FOR CONFIGURATION , CONTROLLER AND FOR FRONTCONTROLLER WITH ONE PACKAGE FIR EACH CLASS
+
+<-------------------------------------------------------------------CONTROLLER-------------------------------------------------------------------->
+
+package AddController;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class AddController {
+
+    @RequestMapping("add")
+    public ModelAndView add(@RequestParam("t1") int num1, @RequestParam("t2") int num2)
+    {
+        ModelAndView mv  = new ModelAndView();
+        int k = num1+num2;
+        mv.addObject("result",k);
+        mv.setViewName("result.jsp");
+        return mv;
+    }
+}
+
+<-------------------------------------------------------------------------------------------------------->
+
+<-------------------------------------------------------------------------------------------------CONFIGUTAION------>
+
+package com.javabasedconfig;
+import config.ConfigClz;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+public class MyFrontController extends AbstractAnnotationConfigDispatcherServletInitializer{
+
+        @Override
+        protected Class<?>[] getRootConfigClasses() {
+            return new Class[]{ConfigClz.class};
+        }
+
+        @Override
+        protected Class<?>[] getServletConfigClasses() {
+            return new Class[0];
+        }
+
+        @Override
+        protected String[] getServletMappings() {
+            return new String[]{"/"} ;
+        }
+    }
+    
+    
+    <-------------------------------------------------------------------------------------------------------->
+    
+    <--------------------------------------------------------------------------------------------------------CONFIGURATION-------------------------------------------------->
+    
+    package config;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+@Configuration
+@EnableWebMvc
+@ComponentScan("AddController")
+public class ConfigClz extends WebMvcConfigurerAdapter {
+
+
+}
+
+<-------------------------------------------------------------------------------------------------------->
+    
